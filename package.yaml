@@ -1,0 +1,23 @@
+name: reflection-proofs # required by nix's hpack detection
+
+dependencies:
+    - liquid-base
+    - liquid-containers
+    - liquid-prelude
+    - liquidhaskell
+
+# Any further LH options should be added directly to the source code
+# --exact-data      # fix an error where a function that matched a `[]` pattern had "Unbound symbol is$GHC.Types[]"
+# --exact-data-cons # make reflect able to handle functions with custom data structures
+# --no-adt          # required for partial constructors
+# --ple             # PLE is off by default?
+# --reflection      # fix an error where a function taking a function-argument had an "Unbound symbol"; also necessary for extrinsic properties
+# --prune-unsorted
+ghc-options:
+    - -Wall
+    - -fplugin=LiquidHaskell
+    - -fplugin-opt=LiquidHaskell:--short-names # make errors more readable
+    - -fplugin-opt=LiquidHaskell:--counter-examples
+
+library:
+    source-dirs: lib
