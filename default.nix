@@ -4,10 +4,8 @@ let
   lh-source = (import <nixpkgs> { }).fetchFromGitHub {
     owner = "plredmond";
     repo = "liquidhaskell";
-    rev = "25ca22970"; # nixify branch built from LH `develop` branch source Wed 07 Oct 2020 08:06:19 PM UTC
-    sha256 = "1ms2d7rabidssjm12kxxd63ngxff8ni02fpzd27pzqwwkcdx0d70";
-    #rev = "34698bb69"; # nixify-hackage branch as of Sat 19 Sep 2020 02:00:21 AM UTC
-    #sha256 = "0igbk5v5bagr62bcgj1zcqm5nw8c4crhvvb84m8bxqbwwr5d3d59";
+    rev = "d990ebd8c6bcc4f4ade7e04048da9bfcaceff39d"; # nixify branch built from LH `develop` branch source Mon 01 Feb 2021 06:39:59 AM UTC
+    sha256 = "0h9pw463r2knr27baj5gb01ccdlwwv7x7xdm9swb39k8mfcyh9y6";
     fetchSubmodules = true;
   };
   # extract pinned nixpkgs and haskellPackages
