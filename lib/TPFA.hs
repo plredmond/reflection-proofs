@@ -15,7 +15,7 @@ length (_:xs) = 1 + length xs
 
 -- | Was called `++` in the paper, but that caused a parse error in the
 -- specification of distributivityP.
-{-@ append :: xs :[a] -> ys:[a] -> {zs:[a] | length zs == length xs + length ys} @-}
+{-@ append :: xs:[a] -> ys:[a] -> {zs:[a] | length zs == length xs + length ys} @-}
 append :: [a] -> [a] -> [a]
 append [] ys = ys
 append (x:xs) ys = x : (xs `append` ys)
