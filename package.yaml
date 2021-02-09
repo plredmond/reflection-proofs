@@ -10,9 +10,8 @@ dependencies:
 # --exact-data      # fix an error where a function that matched a `[]` pattern had "Unbound symbol is$GHC.Types[]"
 # --exact-data-cons # make reflect able to handle functions with custom data structures
 # --no-adt          # required for partial constructors
-# --ple             # PLE is off by default?
+# --ple-local       # ple but only on definitions explicitly marked
 # --reflection      # fix an error where a function taking a function-argument had an "Unbound symbol"; also necessary for extrinsic properties
-# --prune-unsorted
 ghc-options:
     - -Wall
     - -fplugin=LiquidHaskell
