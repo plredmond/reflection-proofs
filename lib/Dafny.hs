@@ -170,8 +170,6 @@ add x y = case x of
 --  * Express cases by matching the constructors.
 --  * Express the inductive assumption holds by calling the proof function.
 --  * Enable PLE to help with automatically undfolding reflected definitions.
---  * Use the ProofCombinators import to access definitions that make reading
---    the proof nicer (they don't really change the functionality though).
 --
 {-@ LIQUID "--ple-local" @-}
 {-@ ple prop_add_Zero @-}
@@ -180,12 +178,48 @@ prop_add_Zero :: Natr -> Proof
 prop_add_Zero Zero = ()
 prop_add_Zero (Succ x) = prop_add_Zero x
 
+-- | LiquidHaskell: You can also prove things manually, such as when LH cannot
+-- do it with PLE. Here's the proof above, done manually. The idea is to
+-- transform the left side of == to the right side of == step by step.
+--
+--  * Use the ProofCombinators import to access definitions that make reading
+--    the proof nicer (they don't really change the functionality though).
+--  * The `*** QED` is not actually necessary. It serves the function of
+--    returning the empty tuple `()` with the evidence in its context.
+--  * The `===` definition verifies that each step of the proof is equal to the
+--    next step, at compile time, using an LH refinement type.
+--
+--    (===) :: x:a -> y:{a | y == x} -> {v:a | v == x && v == y}
+--    _ === y = y
+--
+{-@ prop_add_Zero1 :: x:Natr -> { _:Proof | add x Zero == x } @-}
+prop_add_Zero1 :: Natr -> Proof
+prop_add_Zero1 Zero
+    =   add Zero Zero   -- Run 'add' forwards
+    ===          Zero
+    *** QED
+prop_add_Zero1 (Succ x)
+    =   add (Succ x) Zero   -- Run 'add' forwards
+    === Succ (add x Zero)   ? prop_add_Zero1 x
+    === Succ (    x     )
+    *** QED
+
+-- ** 4.2.b
+
+-- | Dafny book: "A property that requires a single structural induction step
+-- and no auxiliary lemmas Dafny should be able to prove automatically."
+--
+-- LiquidHaskell: I think you still have to tell LH what the cases are and what
+-- the inductive step is.
+--
 {-@ ple prop_add_Succ @-}
 {-@ prop_add_Succ :: x:Natr -> y:Natr -> { _:Proof | Succ (add x y) == add x (Succ y) } @-}
 prop_add_Succ :: Natr -> Natr -> Proof
 prop_add_Succ  Zero    _ = ()
 prop_add_Succ (Succ x) y = prop_add_Succ x y
 
+-- | LiquidHaskell: Here's how you could prove this manually.
+--
 {-@ prop_add_Succ1a :: x:Natr -> y:Natr -> { _:Proof | Succ (add x y) == add x (Succ y) } @-}
 prop_add_Succ1a :: Natr -> Natr -> Proof
 prop_add_Succ1a Zero y
@@ -200,6 +234,10 @@ prop_add_Succ1a (Succ x) y
     === add (Succ x) (Succ y)
     *** QED
 
+-- | LiquidHaskell: Here's another way, which is only stylistically different
+-- and maybe easier to think about. Here we write down the whole `==` statement
+-- and transform both sides on each step.
+--
 {-@ prop_add_Succ1b :: x:Natr -> y:Natr -> { _:Proof | Succ (add x y) == add x (Succ y) } @-}
 prop_add_Succ1b :: Natr -> Natr -> Proof
 prop_add_Succ1b Zero y
@@ -212,6 +250,10 @@ prop_add_Succ1b (Succ x) y
     === Succ (add x (Succ y)) == Succ (add x (Succ y))
     *** QED
 
+-- | LiquidHaskell: If you break the cases apart differently from the functions
+-- your work with, you might have to do extra work but you can still prove the
+-- property.
+--
 {-@ prop_add_Succ2 :: x:Natr -> y:Natr -> { _:Proof | Succ (add x y) == add x (Succ y) } @-}
 prop_add_Succ2 :: Natr -> Natr -> Proof
 prop_add_Succ2 Zero Zero
