@@ -30,6 +30,6 @@ let
       }
     );
   env = (drv.envFunc { withHoogle = true; }).overrideAttrs
-    (old: { nativeBuildInputs = old.nativeBuildInputs ++ [ nixpkgs.ghcid ]; });
+    (old: { nativeBuildInputs = old.nativeBuildInputs ++ [ nixpkgs.ghcid haskellPackages.doctest ]; });
 in
 if nixpkgs.lib.inNixShell then env else drv

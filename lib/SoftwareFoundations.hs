@@ -1,4 +1,4 @@
-module SoftwareFoundations module
+module SoftwareFoundations where
 
 
 -- peano numbers about commutativity and associativity
