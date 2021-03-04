@@ -183,7 +183,56 @@ prop_add_Zero (Succ x) = prop_add_Zero x
 {-@ ple prop_add_Succ @-}
 {-@ prop_add_Succ :: x:Natr -> y:Natr -> { _:Proof | Succ (add x y) == add x (Succ y) } @-}
 prop_add_Succ :: Natr -> Natr -> Proof
-prop_add_Succ  Zero     Zero    = ()
-prop_add_Succ (Succ x)  Zero    = prop_add_Succ x Zero
-prop_add_Succ  Zero    (Succ y) = ()
-prop_add_Succ (Succ x) (Succ y) = prop_add_Succ x y
+prop_add_Succ  Zero    _ = ()
+prop_add_Succ (Succ x) y = prop_add_Succ x y
+
+{-@ prop_add_Succ1a :: x:Natr -> y:Natr -> { _:Proof | Succ (add x y) == add x (Succ y) } @-}
+prop_add_Succ1a :: Natr -> Natr -> Proof
+prop_add_Succ1a Zero y
+    =             Succ (add Zero y)     -- Run 'add' forwards
+    ===           Succ  y               -- Run 'add' backwards (first case)
+    === add Zero (Succ  y          )
+    *** QED
+prop_add_Succ1a (Succ x) y
+    =   Succ (add (Succ x) y)   -- Run 'add' forwards
+    === Succ (Succ (add x y))   ? prop_add_Succ1a x y
+    === Succ (add x (Succ y))   -- Run 'add' backwards
+    === add (Succ x) (Succ y)
+    *** QED
+
+{-@ prop_add_Succ1b :: x:Natr -> y:Natr -> { _:Proof | Succ (add x y) == add x (Succ y) } @-}
+prop_add_Succ1b :: Natr -> Natr -> Proof
+prop_add_Succ1b Zero y
+    =   Succ (add Zero y) == add Zero (Succ y)  -- Run 'add' forwards (left & right)
+    === Succ (         y) ==          (Succ y)
+    *** QED
+prop_add_Succ1b (Succ x) y
+    =   Succ (add (Succ x) y) == add (Succ x) (Succ y)  -- Run 'add' forwards (left & right)
+    === Succ (Succ (add x y)) == Succ (add x (Succ y))  ? prop_add_Succ1b x y -- (left)
+    === Succ (add x (Succ y)) == Succ (add x (Succ y))
+    *** QED
+
+{-@ prop_add_Succ2 :: x:Natr -> y:Natr -> { _:Proof | Succ (add x y) == add x (Succ y) } @-}
+prop_add_Succ2 :: Natr -> Natr -> Proof
+prop_add_Succ2 Zero Zero
+    =             Succ (add Zero Zero)  -- Run 'add' forwards
+    ===           Succ (         Zero)  -- Run 'add' backwards (first case)
+    === add Zero (Succ (Zero         ))
+    *** QED
+prop_add_Succ2 (Succ x) Zero
+    =   Succ (add (Succ x) Zero)    -- Run 'add' forwards
+    === Succ (Succ (add x Zero))    ? prop_add_Succ2 x Zero
+    === Succ (add x (Succ Zero))    -- Run 'add' backwards
+    === add (Succ x) (Succ Zero)
+    *** QED
+prop_add_Succ2 Zero (Succ y)
+    =             Succ (add Zero (Succ y))  -- Run 'add' forwards
+    ===           Succ (          Succ y )  -- Run 'add' backwards (first case)
+    === add Zero (Succ (          Succ y ))
+    *** QED
+prop_add_Succ2 (Succ x) (Succ y)
+    =   Succ (add (Succ x) (Succ y))    -- Run 'add' forwards
+    === Succ (Succ (add x (Succ y)))    ? prop_add_Succ2 x (Succ y)
+    === Succ (add x (Succ (Succ y)))    -- Run 'add' backwards
+    === add (Succ x) (Succ (Succ y))
+    *** QED
