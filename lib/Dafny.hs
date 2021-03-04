@@ -151,18 +151,23 @@ add x y = case x of
 
 -- * 4.2
 
--- | Dafny book: "Notice that Dafny can verify prop_add_Zero automatically,
--- even though the hand-proof requires induction!"
+-- | Dafny book: <explains about ghost methods>
 --
--- LiquidHaskell: Any code that your theorem discusess must be lifted
--- into LH specifications (a measure, inlined, or reflected).
+-- LiquidHaskell: Any code that a theorem discusess must be lifted into LH
+-- specifications (a measure, inlined, or reflected).
 --
 {-@ reflect add @-}
 {-@ LIQUID "--exact-data-cons" @-} -- To lift Natr
 
--- | LiquidHaskell: To prove a property, define a function which states the
+-- ** 4.2.a
+
+-- | Dafny book: "Notice that Dafny can verify prop_add_Zero automatically,
+-- even though the hand-proof requires induction!"
+--
+-- LiquidHaskell: To prove a property, define a function which states the
 -- property in the postcondition.
 --
+--  * Express cases by matching the constructors.
 --  * Express the inductive assumption holds by calling the proof function.
 --  * Enable PLE to help with automatically undfolding reflected definitions.
 --  * Use the ProofCombinators import to access definitions that make reading
@@ -179,6 +184,6 @@ prop_add_Zero (Succ x) = prop_add_Zero x
 {-@ prop_add_Succ :: x:Natr -> y:Natr -> { _:Proof | Succ (add x y) == add x (Succ y) } @-}
 prop_add_Succ :: Natr -> Natr -> Proof
 prop_add_Succ  Zero     Zero    = ()
-prop_add_Succ (Succ x)  Zero    = () *** Admit
+prop_add_Succ (Succ x)  Zero    = prop_add_Succ x Zero
 prop_add_Succ  Zero    (Succ y) = ()
-prop_add_Succ (Succ x) (Succ y) = () *** Admit
+prop_add_Succ (Succ x) (Succ y) = prop_add_Succ x y
