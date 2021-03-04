@@ -7,6 +7,18 @@ module TPFA where
 import Language.Haskell.Liquid.ProofCombinators
 import Prelude hiding (length, (++), reverse)
 
+-- measure
+--  * only one argument
+--  * one case for each constructor
+--  * can be recursive
+--
+-- inline
+--  * not recursive
+--
+-- reflect
+--  * can be recursive
+--  * lifted as a uninterpreted function
+
 length :: [a] -> Int
 length [] = 0
 length (_:xs) = 1 + length xs
