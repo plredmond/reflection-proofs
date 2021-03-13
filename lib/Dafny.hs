@@ -149,6 +149,16 @@ add x y = case x of
     Zero -> y
     Succ x' -> Succ (add x' y)
 
+-- | Cormac: Can you add hat as a postcondition?
+--
+-- LiquidHaskell: Yes, you can.
+--
+{-@ add2 :: x:Natr -> y:Natr -> {z:Natr | y == Zero => x == z} @-}
+add2 :: Natr -> Natr -> Natr
+add2 x y = case x of
+    Zero -> y
+    Succ x' -> Succ (add2 x' y)
+
 -- * 4.2
 
 -- | Dafny book: <explains about ghost methods>
