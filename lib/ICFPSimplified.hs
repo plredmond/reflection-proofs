@@ -24,7 +24,7 @@ index (x:xs) i
     | otherwise = index xs (i-1)
 
 
--- * CBCAST safety
+-- * CBCAST background
 
 {-@ measure procCount :: Nat @-}
 
@@ -47,14 +47,17 @@ deliverableK msg procVc k
     | k == mSender msg  = mSent msg `bang` k == (procVc `bang` k) + 1
     | otherwise         = mSent msg `bang` k <=  procVc `bang` k
 
-{-@ type DeliverableProp M P = k:PID -> { _:Proof | deliverableK M P k } @-}
-
 {-@ reflect causallyBeforeK @-}
 {-@ causallyBeforeK :: Message r -> Message r -> PID -> Bool @-}
 causallyBeforeK :: Message r -> Message r -> Int -> Bool
 causallyBeforeK m1 m2 k
     =   mSent m1 `bang` k <= mSent m2 `bang` k
     &&  mSent m1          /= mSent m2
+
+
+-- * Safety proof
+
+{-@ type DeliverableProp M P = k:PID -> { _:Proof | deliverableK M P k } @-}
 
 {-@ type CausallyBeforeProp M1 M2 = k:PID -> { _:Proof | causallyBeforeK M1 M2 k } @-}
 
