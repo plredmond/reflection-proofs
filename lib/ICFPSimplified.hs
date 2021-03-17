@@ -96,10 +96,10 @@ safety _procVc m1 m2 m1_d_p m1_before_m2 m2_d_p
             ? m1_d_p (mSender m1)
             ? m2_d_p (mSender m2)
             ? processOrderAxiom m1 m2 ()
-            *** Admit
+            *** QED
     | otherwise
         =   ()
             ? m1_before_m2 (mSender m1)
             ? m1_d_p (mSender m1)
             ? m2_d_p (mSender m1)
-            *** Admit
+            *** QED
