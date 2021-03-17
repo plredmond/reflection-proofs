@@ -15,6 +15,8 @@ To complthe code, use haskell stack or nix.
 
 Run `nix-build`.
 
+![It's safe!](build.png)
+
 ## Stack
 
-Run `stack build`.
+Run `stack build`. If using `stack` on nix be sure to eable nix integration in the `stack.yaml`.
