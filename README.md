@@ -15,7 +15,7 @@ check the proofs by compiling the code with the Liquid Haskell plugin.
   Dafny_ [[pdf](http://www.doc.ic.ac.uk/~scd/Dafny_Material/Lectures.pdf)].
 * `lib/ICFPSimplified.hs` -- Simplified proof of CBCAST deliverability
   predicate translated from Agda
-  [[gist](http://www.doc.ic.ac.uk/~scd/Dafny_Material/Lectures.pdf)].
+  [[gist](https://gist.github.com/gshen42/19721e5086664b43ab58c3ede0855414#file-cbcast-agda)].
 * `lib/Induction.hs` -- Nothing yet.
 * `lib/Report.hs` -- All of the examples from a report I wrote for this project
   for class.
