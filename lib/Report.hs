@@ -84,6 +84,6 @@ data Arena = Arena
 {-@ onePlusOneIsTwo :: { _:Proof | 1 + 1 == 2 } @-}
 onePlusOneIsTwo :: Proof
 onePlusOneIsTwo
-    =   1 + 1
+    =   1 + (1::Int)
     === 2
     *** QED
