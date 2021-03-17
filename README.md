@@ -9,7 +9,7 @@ check the proofs by compiling the code with the Liquid Haskell plugin.
 
 # Compile & Check the Proofs
 
-To complthe code, use haskell stack or nix.
+To compile and check the proofs, use haskell stack or nix.
 
 ## Nix
 

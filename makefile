@@ -20,7 +20,7 @@ $(CONFIG_FILE): $(CABAL_FILE)
 
 clean: $(CABAL_FILE)
 	$(SETUP_CMD) clean
-	rm -v $(CABAL_FILE)
+	rm -fv $(CABAL_FILE) result
 	-find . -name '.liquid' -exec rm -rfv '{}' \;
 
 %.cabal: package.yaml
@@ -37,3 +37,13 @@ entr-build:
 	git ls-files | entr -c bash -c 'make build; echo done'
 entr-test:
 	git ls-files | entr -c bash -c 'make test; echo done'
+
+# this target packages everything for submission according to assignment guidelines
+submission.zip: clean README.md
+	git log > gitlog.txt
+	nix-shell \
+		-p pandoc texlive.combined.scheme-full pandoc \
+		--run 'pandoc README.md -o README.pdf'
+	nix-shell \
+		-p zip \
+		--run 'zip submission.zip -r *'
