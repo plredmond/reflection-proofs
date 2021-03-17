@@ -36,4 +36,6 @@ Run `nix-build`.
 
 ## Stack
 
-Run `stack build`. If using `stack` on nix be sure to eable nix integration in the `stack.yaml`.
+Run `stack build`.
+
+If using `stack` on nix be sure to eable nix integration in the `stack.yaml`.
