@@ -34,6 +34,9 @@ Run `nix-build`.
 
 ![It's safe!](build.png)
 
+For development, use `nix-shell` to drop into a shell environment and the use
+the `makefile` targets to do development with fast iterations.
+
 ## Stack
 
 Run `stack build`.
