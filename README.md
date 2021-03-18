@@ -30,7 +30,7 @@ To compile and check the proofs, use haskell stack or nix.
 
 ## Nix
 
-Run `nix-build`.
+Run `nix-build` to compile and check the proofs.
 
 ![It's safe!](build.png)
 
@@ -39,6 +39,9 @@ the `makefile` targets to do development with fast iterations.
 
 ## Stack
 
-Run `stack build`.
+You'll need to have the z3 SMT solver installed. If nix is available on your
+system, you can enable nix integration in the `stack.yaml` to have it fetch z3
+for you. (If using stack on nix, then enabling nix integration is mandatory.)
 
-If using `stack` on nix be sure to eable nix integration in the `stack.yaml`.
+Run `stack build` to compile and check the proofs.
+
