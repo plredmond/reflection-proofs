@@ -20,7 +20,7 @@ $(CONFIG_FILE): $(CABAL_FILE)
 
 clean: $(CABAL_FILE)
 	$(SETUP_CMD) clean
-	rm -fv $(CABAL_FILE) result
+	rm -fv $(CABAL_FILE) result gitlog.txt README.pdf report.pdf submission.zip
 	-find . -name '.liquid' -exec rm -rfv '{}' \;
 
 %.cabal: package.yaml
